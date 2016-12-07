@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+source "${ROOT}/script/lib/ui.sh"
+
+main() {
+  info "stopping Flynn cluster"
+  "${ROOT}/script/kill-flynn"
+
+  info "unmounting layers"
+  while read loop mnt; do
+    sudo umount "${mnt}"
+    sudo losetup --detach "${loop}"
+  done < <(grep -oP "^/dev/loop\d+ /var/lib/flynn/layer-cache/\S+" /proc/mounts)
+
+  info "removing build dir"
+  sudo rm -rf "${ROOT}/build"
+}
+
+main $@
