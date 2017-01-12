@@ -26,7 +26,7 @@ main() {
 
   local host="$(curl -s http://${ip}:1113/host/status | jq -r .id)"
 
-  "${ROOT}/build/bin/flynn-host" run \
+  "${ROOT}/host/bin/flynn-host" run \
     --host "${host}" \
     --bind "$(join "," ${mounts[@]})" \
     --volume "/tmp" \

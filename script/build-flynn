@@ -64,6 +64,9 @@ main() {
     exit 1
   fi
 
+  # TODO: remove
+  rm -f "${ROOT}/cli/tuf.go"
+
   local flynn_host="${ROOT}/build/bin/flynn-host"
 
   # if building from clean, download binaries + images
@@ -145,6 +148,11 @@ main() {
 
   mount "test"
   link "test" "/bin/flynn-test-file-server" "${dir}/bin/flynn-test-file-server"
+
+  # TODO: remove
+  cp "${ROOT}/build/bin/flynn-host" "${ROOT}/host/bin/flynn-host"
+  cp "${ROOT}/build/bin/flynn-init" "${ROOT}/host/bin/flynn-init"
+  cp "${ROOT}/build/manifests/bootstrap-manifest.json" "${ROOT}/bootstrap/bin/manifest.json"
 }
 
 git_version() {
